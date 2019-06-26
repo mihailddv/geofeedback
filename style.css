@@ -135,9 +135,6 @@ textarea {
 }
 
 button,
-input {}
-
-button,
 select {
   text-transform: none
 }
