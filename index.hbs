@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+  <link rel="stylesheet" href="style.css">
   <title>{{htmlWebpackPlugin.options.title}}</title>
 </head>
 <body>
   <div class="container">
     {{> "./src/templates/geo-content.hbs"}}
+    {{> "./src/templates/review-form.hbs"}}
   </div>
 </body>
 </html>
