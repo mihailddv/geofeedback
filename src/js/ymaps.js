@@ -9,6 +9,8 @@ function mapInit() {
             zoom: 12
         })
 
+        var placemarks = [];
+
         // Создаем собственный макет с информацией о выбранном геообъекте.
         var customItemContentLayout = ymaps.templateLayoutFactory.createClass(
             // Флаг "raw" означает, что данные вставляют "как есть" без экранирования html.
@@ -34,6 +36,9 @@ function mapInit() {
             // В браузере Internet Explorer ниже 9й версии иконки никогда не будут отображаться.
             // clusterBalloonAccordionShowIcons: false
         });
+
+        clusterer.add(placemarks);
+        myMap.geoObjects.add(clusterer);
         
         myMap.events.add('click', function(e) {
             var coords = e.get('coords');

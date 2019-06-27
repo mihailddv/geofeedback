@@ -1,28 +1,35 @@
 <div class="review">
   <div class="review__header">
-    <div class="review__location"></div>
+    <div class="review__location">{{ address }}</div>
     <div class="review__close"></div>
   </div>
   <div class="review__content">
     <div class="review__list">
-      <div class="review__item">
-        <div class="review__item-header">
-          <div class="review__item-user"></div>
-          <div class="review__item-position"></div>
-          <div class="review__item-date"></div>
+      {{#each reviews}}
+        <div class="review__item">
+          <div class="review__item-header">
+            <div class="review__item-user">{{ name }}</div>
+            <div class="review__item-position">{{ place }}</div>
+            <div class="review__item-date">{{ date }}</div>
+          </div>
+          <div class="review__item-text">{{ text }}</div>
         </div>
-        <div class="review__item-text"></div>
-      </div>
+      {{/each}}
     </div>
     <form class="review-form">
       <div class="review-form__caption">Ваш отзыв</div>
-      <div class="review-form__block"><input class="review-form__input review__input-name" placeholder="Ваше имя">
+      <div class="review-form__block">
+        <input class="review-form__input review__input-name" placeholder="Ваше имя">
       </div>
-      <div class="review-form__block"><input class="review-form__input review__input-place"
-          placeholder="Укажите место"></div>
-      <div class="review-form__block"><textarea class="review-form__textarea review__input-text"
-          placeholder="Поделитесь впечатлениями"></textarea></div>
-      <div class="review-form__action"><button class="review-form__button button-action">Добавить</button></div>
+      <div class="review-form__block">
+        <input class="review-form__input review__input-place" placeholder="Укажите место">
+      </div>
+      <div class="review-form__block">
+        <textarea class="review-form__textarea review__input-text" placeholder="Поделитесь впечатлениями"></textarea>
+      </div>
+      <div class="review-form__action">
+        <button class="review-form__button button-action">Добавить</button>
+      </div>
     </form>
   </div>
 </div>
