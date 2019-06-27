@@ -38,12 +38,11 @@ function mapInit() {
                 reviewMain.style.left = pagePixels[0]+'px';
                 reviewMain.style.top = pagePixels[1]+'px';
 
+                console.log(obj);                
+
                 // адрес в заголовок формы       
                 // reviewAddress.innerText = address;
-
-                // console.log(reviewAddress);
-                
-        
+                        
                 // openPopup(obj, myMap, position, clusterer, ''); // передаешь в функцию открытия модалки объект, карту, кластер (который сам создашь выше), позицию и hintContent (пока он пустой)
             });
         });

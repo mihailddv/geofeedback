@@ -1,4 +1,6 @@
 import { mapInit, createPlacemark } from './js/ymaps';
+import { addReview } from './js/addReview';
+import { closePopup } from './js/closePopup';
 
 window.onload = mapInit();
 
@@ -9,3 +11,5 @@ window.onload = mapInit();
 //     review.style.display = 'none';
 // });
 
+
+closePopup();
