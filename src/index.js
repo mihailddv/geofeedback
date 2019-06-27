@@ -11,5 +11,9 @@ window.onload = mapInit();
 //     review.style.display = 'none';
 // });
 
+export let allReviews = {
+    reviews: [] 
+};
+
 
 closePopup();
