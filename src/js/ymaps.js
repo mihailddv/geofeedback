@@ -16,16 +16,22 @@ function mapInit() {
         
             geoCoords.then(res => {
                 var obj = {};
-          
+
                 obj.coords = coords; // записываем координаты клика в объект
                 obj.address = res.geoObjects.get(0).properties.get('text'); // получаем адрес
 
-                // console.log(obj.coords);
-                // console.log(obj.address);
+                // popup.innerHTML = render();
 
-                // let review = document.querySelector('.review');
-                // review.style.display = 'block';
-          
+                const htmlReview = reviewForm();
+
+                let reviewMain = document.querySelector('.review-main');
+
+                console.log(reviewMain);
+
+                reviewMain.style.display = 'block';
+    
+                reviewMain.innerHTML = htmlReview;
+        
                 // openPopup(obj, myMap, position, clusterer, ''); // передаешь в функцию открытия модалки объект, карту, кластер (который сам создашь выше), позицию и hintContent (пока он пустой)
             });
         });
