@@ -1,4 +1,3 @@
-export function openPopup(obj, myMap, position, clusterer, '') {
+// export function openPopup(obj, myMap, position, clusterer, '') {
 
-
-}
+// }

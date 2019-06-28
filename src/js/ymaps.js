@@ -2,13 +2,14 @@ import reviewForm from '../templates/review-form.hbs';
 import { addReview } from './addReview';
 import { clearForm } from './clearform';
 // import { openPopup } from './openpopup.js';
+import { formval } from './formval';
 
 function mapInit() {
   
     ymaps.ready(() => {
         let myMap = new ymaps.Map('map', {
             center: [55.75, 37.59], // Moscow
-            zoom: 12
+            zoom: 16
         })
 
         var placemarks = [];
@@ -82,14 +83,13 @@ function mapInit() {
                 buttonAdd.addEventListener('click', function(e) {
                     e.preventDefault();
 
-                    clearForm();
+                    if (formval()) {
+                        myPlacemark = createPlacemark(coords);
+                        myMap.geoObjects.add(myPlacemark);
+                    }                    
 
-                    myPlacemark = createPlacemark(coords);
-                    myMap.geoObjects.add(myPlacemark);
                 });
-                
-                                        
-                // openPopup(obj, myMap, position, clusterer, ''); // передаешь в функцию открытия модалки объект, карту, кластер (который сам создашь выше), позицию и hintContent (пока он пустой)
+
             });
         });
 
