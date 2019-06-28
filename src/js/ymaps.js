@@ -1,4 +1,6 @@
 import reviewForm from '../templates/review-form.hbs';
+import { addReview } from './addReview';
+import { clearForm } from './clearform';
 // import { openPopup } from './openpopup.js';
 
 function mapInit() {
@@ -72,7 +74,17 @@ function mapInit() {
                 let reviewAddress = document.querySelector('.review__location');
                 
                 reviewAddress.innerText = address;
-                        
+
+                // добавить отзыв
+                let buttonAdd = document.querySelector('.review-form__button');
+
+                buttonAdd.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    clearForm();
+                });
+                
+                                        
                 // openPopup(obj, myMap, position, clusterer, ''); // передаешь в функцию открытия модалки объект, карту, кластер (который сам создашь выше), позицию и hintContent (пока он пустой)
             });
         });
