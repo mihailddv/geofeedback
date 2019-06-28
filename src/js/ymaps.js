@@ -52,6 +52,7 @@ function mapInit() {
         
             geoCoords.then(res => {
                 var obj = {};
+                var myPlacemark;
                 
                 var firstGeoObject = res.geoObjects.get(0);
                 var address = firstGeoObject.properties.get('name')+", "+firstGeoObject.properties.get('description');
@@ -82,6 +83,9 @@ function mapInit() {
                     e.preventDefault();
 
                     clearForm();
+
+                    myPlacemark = createPlacemark(coords);
+                    myMap.geoObjects.add(myPlacemark);
                 });
                 
                                         
