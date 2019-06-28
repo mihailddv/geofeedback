@@ -5,88 +5,138 @@ import { clearForm } from './clearform';
 import { formval } from './formval';
 
 function mapInit() {
-  
+
     ymaps.ready(() => {
         let myMap = new ymaps.Map('map', {
-            center: [55.75, 37.59], // Moscow
-            zoom: 16
-        })
+                center: [55.75, 37.59], // Moscow
+                zoom: 16
+            }, {
+                searchControlProvider: 'yandex#search'
+            }),
+            /**
+             * Создадим кластеризатор, вызвав функцию-конструктор.
+             * Список всех опций доступен в документации.
+             * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Clusterer.xml#constructor-summary
+             */
+            clusterer = new ymaps.Clusterer({
+                /**
+                 * Через кластеризатор можно указать только стили кластеров,
+                 * стили для меток нужно назначать каждой метке отдельно.
+                 * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage.xml
+                 */
+                preset: 'islands#invertedVioletClusterIcons',
+                /**
+                 * Ставим true, если хотим кластеризовать только точки с одинаковыми координатами.
+                 */
+                groupByCoordinates: false,
+                /**
+                 * Опции кластеров указываем в кластеризаторе с префиксом "cluster".
+                 * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark.xml
+                 */
+                clusterDisableClickZoom: true,
+                clusterHideIconOnBalloonOpen: false,
+                geoObjectHideIconOnBalloonOpen: false
+            }),
+            /**
+             * Функция возвращает объект, содержащий данные метки.
+             * Поле данных clusterCaption будет отображено в списке геообъектов в балуне кластера.
+             * Поле balloonContentBody - источник данных для контента балуна.
+             * Оба поля поддерживают HTML-разметку.
+             * Список полей данных, которые используют стандартные макеты содержимого иконки метки
+             * и балуна геообъектов, можно посмотреть в документации.
+             * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject.xml
+             */
+            getPointData = function (index) {
+                return {
+                    balloonContentHeader: '<font size=3><b><a target="_blank" href="https://yandex.ru">Здесь может быть ваша ссылка</a></b></font>',
+                    balloonContentBody: '<p>Ваше имя: <input name="login"></p><p>Телефон в формате 2xxx-xxx:  <input></p><p><input type="submit" value="Отправить"></p>',
+                    balloonContentFooter: '<font size=1>Информация предоставлена: </font> балуном <strong>метки ' + index + '</strong>',
+                    clusterCaption: 'метка <strong>' + index + '</strong>'
+                };
+            },
+            /**
+             * Функция возвращает объект, содержащий опции метки.
+             * Все опции, которые поддерживают геообъекты, можно посмотреть в документации.
+             * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject.xml
+             */
+            getPointOptions = function () {
+                return {
+                    preset: 'islands#violetIcon'
+                };
+            },
+            points = [],
+            geoObjects = [];
+
+        /**
+         * Данные передаются вторым параметром в конструктор метки, опции - третьим.
+         * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Placemark.xml#constructor-summary
+         */
+        for (var i = 0, len = points.length; i < len; i++) {
+            geoObjects[i] = new ymaps.Placemark(points[i], getPointData(i), getPointOptions());
+        }
+
+        /**
+         * Можно менять опции кластеризатора после создания.
+         */
+        clusterer.options.set({
+            gridSize: 80,
+            clusterDisableClickZoom: true
+        });
+
+        /**
+         * В кластеризатор можно добавить javascript-массив меток (не геоколлекцию) или одну метку.
+         * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Clusterer.xml#add
+         */
+        clusterer.add(geoObjects);
+        myMap.geoObjects.add(clusterer);
 
         var placemarks = [];
 
-        // Создаем собственный макет с информацией о выбранном геообъекте.
-        var customItemContentLayout = ymaps.templateLayoutFactory.createClass(
-            // Флаг "raw" означает, что данные вставляют "как есть" без экранирования html.
-            '<h2 class=ballon_header>{{ properties.balloonContentHeader|raw }}</h2>' +
-            '<div class=ballon_body>{{ properties.balloonContentBody|raw }}</div>' +
-            '<div class=ballon_footer>{{ properties.balloonContentFooter|raw }}</div>'
-        );
-        
-        var clusterer = new ymaps.Clusterer({
-            clusterDisableClickZoom: true,
-            clusterOpenBalloonOnClick: true,
-            // Устанавливаем стандартный макет балуна кластера "Аккордеон".
-            clusterBalloonContentLayout: 'cluster#balloonAccordion',
-            // Устанавливаем собственный макет.
-            clusterBalloonItemContentLayout: customItemContentLayout,
-            // Устанавливаем режим открытия балуна. 
-            // В данном примере балун никогда не будет открываться в режиме панели.
-            clusterBalloonPanelMaxMapArea: 0,
-            // Устанавливаем размеры макета контента балуна (в пикселях).
-            clusterBalloonContentLayoutWidth: 250,
-            clusterBalloonContentLayoutHeight: 200,
-            // Можно отключить отображение иконок геообъектов в списке. 
-            // В браузере Internet Explorer ниже 9й версии иконки никогда не будут отображаться.
-            // clusterBalloonAccordionShowIcons: false
-        });
-
-        clusterer.add(placemarks);
-        myMap.geoObjects.add(clusterer);
-        
-        myMap.events.add('click', function(e) {
+        myMap.events.add('click', function (e) {
             var coords = e.get('coords');
             var geoCoords = ymaps.geocode(coords);
             var position = e.get('position');
 
             let pagePixels = e.get('pagePixels'),
-                reviewMain = document.querySelector('.review-main');            
-        
+                reviewMain = document.querySelector('.review-main');
+
             geoCoords.then(res => {
                 var obj = {};
                 var myPlacemark;
-                
+
                 var firstGeoObject = res.geoObjects.get(0);
-                var address = firstGeoObject.properties.get('name')+", "+firstGeoObject.properties.get('description');
-                
+                var address = firstGeoObject.properties.get('name') + ", " + firstGeoObject.properties.get('description');
 
                 obj.coords = coords; // записываем координаты клика в объект
                 obj.address = res.geoObjects.get(0).properties.get('text'); // получаем адрес
 
                 // const htmlReview = reviewForm();
-    
+
                 reviewMain.innerHTML = reviewForm();
 
                 reviewMain.style.display = 'block';
 
                 // показывает модалку рядом с кликом
-                reviewMain.style.left = pagePixels[0]+'px';
-                reviewMain.style.top = pagePixels[1]+'px';
-                
+                reviewMain.style.left = pagePixels[0] + 'px';
+                reviewMain.style.top = pagePixels[1] + 'px';
+
                 // адрес
                 let reviewAddress = document.querySelector('.review__location');
-                
+
                 reviewAddress.innerText = address;
 
                 // добавить отзыв
                 let buttonAdd = document.querySelector('.review-form__button');
 
-                buttonAdd.addEventListener('click', function(e) {
+                buttonAdd.addEventListener('click', function (e) {
                     e.preventDefault();
 
                     if (formval()) {
                         myPlacemark = createPlacemark(coords);
                         myMap.geoObjects.add(myPlacemark);
-                    }                    
+                        clusterer.add(placemarks);
+                        myMap.geoObjects.add(clusterer);
+                    }
 
                 });
 
