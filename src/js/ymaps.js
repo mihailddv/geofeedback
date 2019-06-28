@@ -54,23 +54,24 @@ function mapInit() {
                 var firstGeoObject = res.geoObjects.get(0);
                 var address = firstGeoObject.properties.get('name')+", "+firstGeoObject.properties.get('description');
                 
-                let reviewAddress = document.querySelector('.review__location');
 
                 obj.coords = coords; // записываем координаты клика в объект
                 obj.address = res.geoObjects.get(0).properties.get('text'); // получаем адрес
 
-                const htmlReview = reviewForm();
+                // const htmlReview = reviewForm();
+    
+                reviewMain.innerHTML = reviewForm();
 
                 reviewMain.style.display = 'block';
-    
-                reviewMain.innerHTML = htmlReview;
 
                 // показывает модалку рядом с кликом
                 reviewMain.style.left = pagePixels[0]+'px';
                 reviewMain.style.top = pagePixels[1]+'px';
-
-                // адрес в заголовок формы       
-                // reviewAddress.innerText = address;
+                
+                // адрес
+                let reviewAddress = document.querySelector('.review__location');
+                
+                reviewAddress.innerText = address;
                         
                 // openPopup(obj, myMap, position, clusterer, ''); // передаешь в функцию открытия модалки объект, карту, кластер (который сам создашь выше), позицию и hintContent (пока он пустой)
             });
