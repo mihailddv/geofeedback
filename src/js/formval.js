@@ -1,5 +1,3 @@
-import { clearForm } from './clearform';
-
 export function formval(confirm) {
     let reviewName = document.querySelector('.review__input-name'),
         reviewPlace = document.querySelector('.review__input-place'),
@@ -9,7 +7,6 @@ export function formval(confirm) {
         alert('Не все поля заполнены')
     } else {
         confirm = true;
-        clearForm();
     }
 
     return confirm;

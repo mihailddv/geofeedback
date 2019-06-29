@@ -1,6 +1,6 @@
 import reviewForm from '../templates/review-form.hbs';
 import { addReview } from './addReview';
-import { clearForm } from './clearform';
+// import { clearForm } from './clearform';
 // import { openPopup } from './openpopup.js';
 import { formval } from './formval';
 
@@ -136,6 +136,8 @@ function mapInit() {
                         myMap.geoObjects.add(myPlacemark);
                         clusterer.add(placemarks);
                         myMap.geoObjects.add(clusterer);
+
+                        addReview();
                     }
 
                 });
