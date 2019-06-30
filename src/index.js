@@ -4,7 +4,7 @@ import { closePopup } from './js/closepopup';
 window.onload = mapInit();
 
 export let allReviews = {
-    reviews: [] 
+    items: [] 
 };
 
 closePopup();
