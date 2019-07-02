@@ -95,7 +95,23 @@ function mapInit() {
             clusterDisableClickZoom: true
         });
 
-        var placemarks = [];
+        var obj = {};
+
+        obj.comments = {
+            list: []
+        };
+
+        var myPlacemark = new ymaps.Placemark(obj.coords, {
+            hintContent: obj,
+            // balloonContentHeader: obj.comments.list[obj.comments.list.length - 1].place,
+            // balloonContentBody: [obj.adress, obj.comments.list[obj.comments.list.length - 1].comment],
+            // balloonContentFooter: obj.comments.list[obj.comments.list.length - 1].date
+        }, {
+            preset: 'islands#violetDotIconWithCaption',
+            draggable: false,
+            openHintOnHover: false,
+            hasBalloon: false
+        });
 
         myMap.events.add('click', function (e) {
             var coords = e.get('coords');
@@ -106,8 +122,6 @@ function mapInit() {
                 reviewMain = document.querySelector('.review-main');
 
             geoCoords.then(res => {
-                var obj = {};
-                var myPlacemark;
 
                 var firstGeoObject = res.geoObjects.get(0);
                 var address = firstGeoObject.properties.get('name') + ", " + firstGeoObject.properties.get('description');
@@ -139,10 +153,11 @@ function mapInit() {
                     if (formval()) {
                         myPlacemark = createPlacemark(coords);
                         myMap.geoObjects.add(myPlacemark);
-                        clusterer.add(placemarks);
+                        clusterer.add(myPlacemark);
                         myMap.geoObjects.add(clusterer);
 
                         addReview();
+                        
                     }
 
                 });
