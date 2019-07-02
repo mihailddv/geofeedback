@@ -1,3 +1,5 @@
+import './css/style.css';
+
 import { mapInit, createPlacemark } from './js/ymaps';
 import { closePopup } from './js/closepopup';
 

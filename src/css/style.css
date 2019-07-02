@@ -303,11 +303,6 @@ button {
   background-color: #ff5e30
 }
 
-.button-progress {
-  background: url(../img/progress-black2.gif) center no-repeat #333132;
-  font-size: 0
-}
-
 .button-progress:hover {
   background-color: #333132;
   border-color: #fff;
