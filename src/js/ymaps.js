@@ -58,8 +58,8 @@ function mapInit() {
                     if (formval()) {
                         myPlacemark = createPlacemark(coords);
                         myMap.geoObjects.add(myPlacemark);
-                        clusterer.add(placemarks);
-                        myMap.geoObjects.add(clusterer);
+                        // clusterer.add(placemarks);
+                        // myMap.geoObjects.add(clusterer);
 
                         addReview();
                     }
