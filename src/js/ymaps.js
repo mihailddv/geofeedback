@@ -3,6 +3,8 @@ import { addReview } from './addReview';
 // import { clearForm } from './clearform';
 // import { openPopup } from './openpopup.js';
 import { formval } from './formval';
+import { addPlacemark } from './addPlacemark';
+// import { placemarks } from './placemarks';
 
 function mapInit() {
 
@@ -94,9 +96,9 @@ function mapInit() {
             gridSize: 80,
             clusterDisableClickZoom: true
         });
-
+        
         var obj = {};
-
+        
         obj.comments = {
             list: []
         };
@@ -129,8 +131,6 @@ function mapInit() {
                 obj.coords = coords; // записываем координаты клика в объект
                 obj.address = res.geoObjects.get(0).properties.get('text'); // получаем адрес
 
-                // const htmlReview = reviewForm();
-
                 reviewMain.innerHTML = reviewForm();
 
                 reviewMain.style.display = 'block';
@@ -153,10 +153,16 @@ function mapInit() {
                     if (formval()) {
                         myPlacemark = createPlacemark(coords);
                         myMap.geoObjects.add(myPlacemark);
-                        clusterer.add(myPlacemark);
-                        myMap.geoObjects.add(clusterer);
+                        // clusterer.add(myPlacemark);
+                        // myMap.geoObjects.add(clusterer);
 
                         addReview();
+
+                        addPlacemark(obj);
+
+                        // placemarks(obj, myMap, position, clusterer);
+
+                        console.log(myPlacemark);                        
                         
                     }
 
@@ -191,12 +197,38 @@ function mapInit() {
 
 }
 
+// function createPlacemark(myMap, obj, clusterer) {
+//     var myPlacemark = new ymaps.Placemark(obj.coords, {
+//         hintContent: obj,
+//         // balloonContentHeader: obj.comments.list[obj.comments.list.length - 1].place,
+//         // balloonContentBody: [obj.adress, obj.comments.list[obj.comments.list.length - 1].comment],
+//         // balloonContentFooter: obj.comments.list[obj.comments.list.length - 1].timestamp
+//     }, {
+//         preset: 'islands#violetDotIconWithCaption',
+//         draggable: false,
+//         openHintOnHover: false,
+//         hasBalloon: false
+//     });
+
+//     // placemarks.push(myPlacemark);
+
+//     clusterer.add(myPlacemark);
+
+//     myMap.geoObjects.add(clusterer);
+
+//     clusterer.events.add('click', e => {
+//         console.log('test');
+        
+//         // pop.style = "display: none"
+//     })
+// }
+
 function createPlacemark(coords) {
     return new ymaps.Placemark(coords, {
         // iconCaption: 'поиск...'
     }, {
         preset: 'islands#violetDotIconWithCaption',
-        draggable: true
+        draggable: false
     });
 }
 

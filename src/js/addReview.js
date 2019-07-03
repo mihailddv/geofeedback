@@ -25,4 +25,5 @@ export function addReview() {
     reviewText.innerHTML = reviewInputText.value;
     
     clearForm();
+
 }
