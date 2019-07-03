@@ -103,18 +103,6 @@ function mapInit() {
             list: []
         };
 
-        var myPlacemark = new ymaps.Placemark(obj.coords, {
-            hintContent: obj,
-            // balloonContentHeader: obj.comments.list[obj.comments.list.length - 1].place,
-            // balloonContentBody: [obj.adress, obj.comments.list[obj.comments.list.length - 1].comment],
-            // balloonContentFooter: obj.comments.list[obj.comments.list.length - 1].date
-        }, {
-            preset: 'islands#violetDotIconWithCaption',
-            draggable: false,
-            openHintOnHover: false,
-            hasBalloon: false
-        });
-
         myMap.events.add('click', function (e) {
             var coords = e.get('coords');
             var geoCoords = ymaps.geocode(coords);
@@ -151,18 +139,30 @@ function mapInit() {
                     e.preventDefault();
 
                     if (formval()) {
-                        myPlacemark = createPlacemark(coords);
+                        myPlacemark = createPlacemark(coords, obj);
                         myMap.geoObjects.add(myPlacemark);
-                        // clusterer.add(myPlacemark);
-                        // myMap.geoObjects.add(clusterer);
+                        clusterer.add(myPlacemark);
+                        myMap.geoObjects.add(clusterer);
 
                         addReview();
 
                         addPlacemark(obj);
 
                         // placemarks(obj, myMap, position, clusterer);
+   
+                        var myPlacemark = new ymaps.Placemark(obj.coords, {
+                            hintContent: obj,
+                            balloonContentHeader: obj.address,
+                            balloonContentBody: '',
+                            balloonContentFooter: ''
+                        }, {
+                            preset: 'islands#violetDotIconWithCaption',
+                            draggable: false,
+                            openHintOnHover: false,
+                            hasBalloon: false
+                        });
 
-                        console.log(myPlacemark);                        
+                        console.log(myPlacemark);    
                         
                     }
 
