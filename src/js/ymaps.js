@@ -4,7 +4,7 @@ import { addReview } from './addReview';
 // import { openPopup } from './openpopup.js';
 import { formval } from './formval';
 import { addPlacemark } from './addPlacemark';
-// import { placemarks } from './placemarks';
+import { createPlacemark } from './createPlacemark';
 
 function mapInit() {
 
@@ -98,10 +98,6 @@ function mapInit() {
         });
         
         var obj = {};
-        
-        obj.comments = {
-            list: []
-        };
 
         myMap.events.add('click', function (e) {
             var coords = e.get('coords');
@@ -118,6 +114,10 @@ function mapInit() {
 
                 obj.coords = coords; // записываем координаты клика в объект
                 obj.address = res.geoObjects.get(0).properties.get('text'); // получаем адрес
+        
+                obj.comments = {
+                    list: []
+                };
 
                 reviewMain.innerHTML = reviewForm();
 
@@ -139,41 +139,24 @@ function mapInit() {
                     e.preventDefault();
 
                     if (formval()) {
-                        myPlacemark = createPlacemark(coords, obj);
-                        myMap.geoObjects.add(myPlacemark);
-                        clusterer.add(myPlacemark);
-                        myMap.geoObjects.add(clusterer);
 
                         addReview();
 
-                        addPlacemark(obj);
-
-                        // placemarks(obj, myMap, position, clusterer);
-   
-                        var myPlacemark = new ymaps.Placemark(obj.coords, {
-                            hintContent: obj,
-                            balloonContentHeader: obj.address,
-                            balloonContentBody: '',
-                            balloonContentFooter: ''
-                        }, {
-                            preset: 'islands#violetDotIconWithCaption',
-                            draggable: false,
-                            openHintOnHover: false,
-                            hasBalloon: false
-                        });
-
-                        console.log(myPlacemark);    
+                        createPlacemark(myMap, obj, clusterer);
                         
                     }
 
                 });
-
+                                
             });
         });
 
         // Обрабатываем событие открытия балуна на геообъекте:
         // начинаем загрузку данных, затем обновляем его содержимое.
         placemark.events.add('balloonopen', function (e) {
+
+            console.log('test');
+            
             placemark.properties.set('balloonContent', "Идет загрузка данных...");
 
             // Имитация задержки при загрузке данных (для демонстрации примера).
@@ -191,46 +174,58 @@ function mapInit() {
             }, 1500);
         });
 
+        // myMap.balloon.open([51.85, 38.37], "Содержимое балуна", {
+        //     // Опция: не показываем кнопку закрытия.
+        //     closeButton: false
+        // });
+
         myMap.geoObjects.add(placemark);
 
     });
 
 }
 
-// function createPlacemark(myMap, obj, clusterer) {
-//     var myPlacemark = new ymaps.Placemark(obj.coords, {
-//         hintContent: obj,
-//         // balloonContentHeader: obj.comments.list[obj.comments.list.length - 1].place,
-//         // balloonContentBody: [obj.adress, obj.comments.list[obj.comments.list.length - 1].comment],
-//         // balloonContentFooter: obj.comments.list[obj.comments.list.length - 1].timestamp
+function mapInit2() {
+    ymaps.ready(() => {
+        var myMap = new ymaps.Map('map', {
+            center: [54.83, 37.11],
+            zoom: 5
+        }, {
+            searchControlProvider: 'yandex#search'
+        }),
+        myPlacemark = new ymaps.Placemark([55.907228, 31.260503], {
+            // Чтобы балун и хинт открывались на метке, необходимо задать ей определенные свойства.
+            balloonContentHeader: "Балун метки",
+            balloonContentBody: "Содержимое <em>балуна</em> метки",
+            balloonContentFooter: "Подвал",
+            hintContent: "Хинт метки"
+        });
+
+        myMap.geoObjects.add(myPlacemark); 
+
+        // Открываем балун на карте (без привязки к геообъекту).
+        myMap.balloon.open([51.85, 38.37], "Содержимое балуна", {
+            // Опция: не показываем кнопку закрытия.
+            closeButton: false
+        });
+
+        // Показываем хинт на карте (без привязки к геообъекту).
+        myMap.hint.open(myMap.getCenter(), "Одинокий хинт без метки", {
+            // Опция: задержка перед открытием.
+            openTimeout: 1500
+        });
+    }
+)}
+
+
+// function createPlacemark(coords) {
+//     return new ymaps.Placemark(coords, {
+//         // iconCaption: 'поиск...'
 //     }, {
 //         preset: 'islands#violetDotIconWithCaption',
-//         draggable: false,
-//         openHintOnHover: false,
-//         hasBalloon: false
+//         draggable: false
 //     });
-
-//     // placemarks.push(myPlacemark);
-
-//     clusterer.add(myPlacemark);
-
-//     myMap.geoObjects.add(clusterer);
-
-//     clusterer.events.add('click', e => {
-//         console.log('test');
-        
-//         // pop.style = "display: none"
-//     })
 // }
-
-function createPlacemark(coords) {
-    return new ymaps.Placemark(coords, {
-        // iconCaption: 'поиск...'
-    }, {
-        preset: 'islands#violetDotIconWithCaption',
-        draggable: false
-    });
-}
 
 export {
     mapInit,
