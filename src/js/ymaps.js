@@ -147,10 +147,10 @@ function mapInit() {
                 });
                 
             });
+            
+            openBalloon(clusterer, obj, myMap, coords);
 
         });
-
-        openBalloon(clusterer, obj, myMap);
 
     });
 
