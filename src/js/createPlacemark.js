@@ -14,4 +14,8 @@ export function createPlacemark(myMap, obj, clusterer) {
     clusterer.add(myPlacemark);
 
     myMap.geoObjects.add(clusterer);
+
+    myPlacemark.events.add('click', () => {
+        console.log('test');   
+    })
 }

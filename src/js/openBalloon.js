@@ -5,9 +5,5 @@ export function openBalloon(clusterer, obj, myMap, coords) {
     clusterer.events.add('click', () => {
         reviewMain.style.display = 'none';
     })
-
-    // myMap.balloon.open(obj.coords, () => {
-    //     console.log('test');
-    //     reviewMain.style.display = 'block';
-    // })
+    
 }
