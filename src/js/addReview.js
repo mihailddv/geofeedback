@@ -1,6 +1,6 @@
 import { clearForm } from './clearform';
 
-export function addReview() {
+export function addReview(obj) {
 
     const reviewList = document.querySelector('.review__list'),
         reviewItem = document.createElement('div'),
@@ -23,6 +23,10 @@ export function addReview() {
     reviewName.innerHTML = reviewInputName.value;
     reviewPlace.innerHTML = reviewInputPlace.value;
     reviewText.innerHTML = reviewInputText.value;
+
+    obj.name = reviewInputName.value;
+    obj.place = reviewInputPlace.value;
+    obj.text = reviewInputText.value;
     
     clearForm();
 

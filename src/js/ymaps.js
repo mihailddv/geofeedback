@@ -1,9 +1,7 @@
 import reviewForm from '../templates/review-form.hbs';
 import { addReview } from './addReview';
-// import { clearForm } from './clearform';
-// import { openPopup } from './openpopup.js';
+import { openBalloon } from './openBalloon';
 import { formval } from './formval';
-import { addPlacemark } from './addPlacemark';
 import { createPlacemark } from './createPlacemark';
 
 function mapInit() {
@@ -16,7 +14,7 @@ function mapInit() {
                 searchControlProvider: 'yandex#search'
             }),
             // Метка, содержимое балуна которой загружается с помощью AJAX.
-            placemark = new ymaps.Placemark([55.8, 37.72], {
+            placemark = new ymaps.Placemark(myMap.getCenter(), {
                 iconContent: "Узнать адрес",
                 hintContent: "Перетащите метку и кликните, чтобы узнать адрес"
             }, {
@@ -114,7 +112,7 @@ function mapInit() {
 
                 obj.coords = coords; // записываем координаты клика в объект
                 obj.address = res.geoObjects.get(0).properties.get('text'); // получаем адрес
-        
+                        
                 obj.comments = {
                     list: []
                 };
@@ -140,92 +138,23 @@ function mapInit() {
 
                     if (formval()) {
 
-                        addReview();
+                        addReview(obj);
 
                         createPlacemark(myMap, obj, clusterer);
                         
                     }
 
                 });
-                                
+                
             });
+
         });
 
-        // Обрабатываем событие открытия балуна на геообъекте:
-        // начинаем загрузку данных, затем обновляем его содержимое.
-        placemark.events.add('balloonopen', function (e) {
-
-            console.log('test');
-            
-            placemark.properties.set('balloonContent', "Идет загрузка данных...");
-
-            // Имитация задержки при загрузке данных (для демонстрации примера).
-            setTimeout(function () {
-                ymaps.geocode(placemark.geometry.getCoordinates(), {
-                    results: 1
-                }).then(function (res) {
-                    var newContent = res.geoObjects.get(0) ?
-                        res.geoObjects.get(0).properties.get('name') :
-                        'Не удалось определить адрес.';
-
-                    // Задаем новое содержимое балуна в соответствующее свойство метки.
-                    placemark.properties.set('balloonContent', newContent);
-                });
-            }, 1500);
-        });
-
-        // myMap.balloon.open([51.85, 38.37], "Содержимое балуна", {
-        //     // Опция: не показываем кнопку закрытия.
-        //     closeButton: false
-        // });
-
-        myMap.geoObjects.add(placemark);
+        openBalloon(clusterer, obj, myMap);
 
     });
 
 }
-
-function mapInit2() {
-    ymaps.ready(() => {
-        var myMap = new ymaps.Map('map', {
-            center: [54.83, 37.11],
-            zoom: 5
-        }, {
-            searchControlProvider: 'yandex#search'
-        }),
-        myPlacemark = new ymaps.Placemark([55.907228, 31.260503], {
-            // Чтобы балун и хинт открывались на метке, необходимо задать ей определенные свойства.
-            balloonContentHeader: "Балун метки",
-            balloonContentBody: "Содержимое <em>балуна</em> метки",
-            balloonContentFooter: "Подвал",
-            hintContent: "Хинт метки"
-        });
-
-        myMap.geoObjects.add(myPlacemark); 
-
-        // Открываем балун на карте (без привязки к геообъекту).
-        myMap.balloon.open([51.85, 38.37], "Содержимое балуна", {
-            // Опция: не показываем кнопку закрытия.
-            closeButton: false
-        });
-
-        // Показываем хинт на карте (без привязки к геообъекту).
-        myMap.hint.open(myMap.getCenter(), "Одинокий хинт без метки", {
-            // Опция: задержка перед открытием.
-            openTimeout: 1500
-        });
-    }
-)}
-
-
-// function createPlacemark(coords) {
-//     return new ymaps.Placemark(coords, {
-//         // iconCaption: 'поиск...'
-//     }, {
-//         preset: 'islands#violetDotIconWithCaption',
-//         draggable: false
-//     });
-// }
 
 export {
     mapInit,
