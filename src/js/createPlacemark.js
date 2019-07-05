@@ -1,6 +1,6 @@
 import { openModal } from './openModal';
 
-export function createPlacemark(myMap, obj, clusterer) {
+export function createPlacemark(myMap, obj, clusterer, address, pagePixels) {
     var myPlacemark = new ymaps.Placemark(obj.coords, {
         hintContent: obj.coords,
         balloonContentHeader: [obj.name, obj.place],
@@ -18,7 +18,6 @@ export function createPlacemark(myMap, obj, clusterer) {
     myMap.geoObjects.add(clusterer);
 
     myPlacemark.events.add('click', () => {
-        openModal();
-        console.log('test');        
+        openModal(obj, address, pagePixels, myMap, clusterer);
     })
 }

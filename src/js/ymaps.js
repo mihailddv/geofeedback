@@ -1,8 +1,5 @@
-import reviewForm from '../templates/review-form.hbs';
-import { addReview } from './addReview';
+// import reviewForm from '../templates/review-form.hbs';
 import { openBalloon } from './openBalloon';
-import { formval } from './formval';
-import { createPlacemark } from './createPlacemark';
 import { openModal } from './openModal';
 
 function mapInit() {
@@ -118,23 +115,7 @@ function mapInit() {
                     list: []
                 };
 
-                openModal(obj, address, pagePixels);
-
-                // добавить отзыв
-                let buttonAdd = document.querySelector('.review-form__button');
-
-                buttonAdd.addEventListener('click', function (e) {
-                    e.preventDefault();
-
-                    if (formval()) {
-
-                        addReview(obj);
-
-                        createPlacemark(myMap, obj, clusterer);
-                        
-                    }
-
-                });
+                openModal(obj, address, pagePixels, myMap, clusterer);
                 
             });
             
@@ -147,6 +128,5 @@ function mapInit() {
 }
 
 export {
-    mapInit,
-    createPlacemark
+    mapInit
 }
