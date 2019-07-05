@@ -3,6 +3,7 @@ import { addReview } from './addReview';
 import { openBalloon } from './openBalloon';
 import { formval } from './formval';
 import { createPlacemark } from './createPlacemark';
+import { openModal } from './openModal';
 
 function mapInit() {
 
@@ -102,8 +103,8 @@ function mapInit() {
             var geoCoords = ymaps.geocode(coords);
             var position = e.get('position');
 
-            let pagePixels = e.get('pagePixels'),
-                reviewMain = document.querySelector('.review-main');
+            let pagePixels = e.get('pagePixels');            
+            let reviewMain = document.querySelector('.review-main');
 
             geoCoords.then(res => {
 
@@ -117,18 +118,7 @@ function mapInit() {
                     list: []
                 };
 
-                reviewMain.innerHTML = reviewForm();
-
-                reviewMain.style.display = 'block';
-
-                // показывает модалку рядом с кликом
-                reviewMain.style.left = pagePixels[0] + 'px';
-                reviewMain.style.top = pagePixels[1] + 'px';
-
-                // адрес
-                let reviewAddress = document.querySelector('.review__location');
-
-                reviewAddress.innerText = address;
+                openModal(obj, address, pagePixels);
 
                 // добавить отзыв
                 let buttonAdd = document.querySelector('.review-form__button');
