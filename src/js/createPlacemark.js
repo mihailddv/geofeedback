@@ -5,7 +5,7 @@ export function createPlacemark(myMap, obj, clusterer, address, pagePixels) {
         hintContent: obj.coords,
         balloonContentHeader: [obj.name, obj.place],
         balloonContentBody: obj.text,
-        balloonContentFooter: obj.address,
+        balloonContentFooter: '<span class="balloon__link">' + obj.address + '</span>',
     }, {
         preset: 'islands#violetDotIconWithCaption',
         draggable: false,
@@ -13,15 +13,13 @@ export function createPlacemark(myMap, obj, clusterer, address, pagePixels) {
         hasBalloon: false
     });
 
+    // placemarks.push(myPlacemark);
+
     clusterer.add(myPlacemark);
 
     myMap.geoObjects.add(clusterer);
 
     myPlacemark.events.add('click', () => {
-        const reviewList = document.querySelector('.review__list');
-
-        reviewList.innerHTML = '';
-        
         openModal(obj, address, pagePixels, myMap, clusterer);
     })
 }

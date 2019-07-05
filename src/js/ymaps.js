@@ -1,6 +1,7 @@
 // import reviewForm from '../templates/review-form.hbs';
 // import { openBalloon } from './openBalloon';
 import { openModal } from './openModal';
+import { balloonLink } from './balloonLink';
 
 function mapInit() {
 
@@ -93,7 +94,8 @@ function mapInit() {
             clusterDisableClickZoom: true
         });
         
-        var obj = {};
+        var obj = {},
+            placemarks = {};
 
         myMap.events.add('click', function (e) {
             var coords = e.get('coords');
@@ -108,19 +110,31 @@ function mapInit() {
                 var address = firstGeoObject.properties.get('name') + ", " + firstGeoObject.properties.get('description');
 
                 obj.coords = coords; // записываем координаты клика в объект
-                obj.address = res.geoObjects.get(0).properties.get('text'); // получаем адрес
+                // obj.address = res.geoObjects.get(0).properties.get('text'); // получаем адрес
+                obj.address = address; // получаем адрес
                         
                 obj.comments = {
                     list: []
                 };
+                
+                // if (!!allObj[obj.address]) {
+                //     allObj[obj.address].push(obj);
+                // } else {
+                //     allObj[obj.address] = [obj]
+                // }
+                
+                // console.log(allObj);
 
-                openModal(obj, address, pagePixels, myMap, clusterer);
+                openModal(obj, address, pagePixels, myMap, clusterer, placemarks);
+
+                balloonLink(obj, address, pagePixels, myMap, clusterer, placemarks);
                 
             });
             
             // openBalloon(clusterer, obj, myMap, coords);
 
         });
+        
 
     });
 

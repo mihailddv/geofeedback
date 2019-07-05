@@ -23,7 +23,7 @@ export function addReview(obj) {
     reviewName.innerHTML = reviewInputName.value;
     reviewPlace.innerHTML = reviewInputPlace.value;
     reviewText.innerHTML = reviewInputText.value;
-
+    
     obj.name = reviewInputName.value;
     obj.place = reviewInputPlace.value;
     obj.text = reviewInputText.value;

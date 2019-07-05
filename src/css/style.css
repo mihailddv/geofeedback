@@ -251,7 +251,6 @@ p:last-child {
   margin-bottom: 0
 }
 
-.review__item,
 .review__list {
   margin-bottom: 25px
 }
@@ -407,6 +406,14 @@ button {
   background: #c4c4c4
 }
 
+.review__item {
+  margin-bottom: 25px;
+}
+
+.review__item:first-child {
+  margin-bottom: 0;
+}
+
 .review__item:last-child {
   margin-bottom: 0
 }
@@ -488,4 +495,14 @@ button {
 
 .review-form__action {
   text-align: right
+}
+
+.balloon__link {
+  color: #ff8663;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.balloon__link:hover {
+  text-decoration: none;
 }
