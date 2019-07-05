@@ -18,6 +18,10 @@ export function createPlacemark(myMap, obj, clusterer, address, pagePixels) {
     myMap.geoObjects.add(clusterer);
 
     myPlacemark.events.add('click', () => {
+        const reviewList = document.querySelector('.review__list');
+
+        reviewList.innerHTML = '';
+        
         openModal(obj, address, pagePixels, myMap, clusterer);
     })
 }

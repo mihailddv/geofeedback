@@ -1,5 +1,5 @@
 // import reviewForm from '../templates/review-form.hbs';
-import { openBalloon } from './openBalloon';
+// import { openBalloon } from './openBalloon';
 import { openModal } from './openModal';
 
 function mapInit() {
@@ -100,8 +100,7 @@ function mapInit() {
             var geoCoords = ymaps.geocode(coords);
             var position = e.get('position');
 
-            let pagePixels = e.get('pagePixels');            
-            let reviewMain = document.querySelector('.review-main');
+            let pagePixels = e.get('pagePixels');
 
             geoCoords.then(res => {
 
@@ -119,7 +118,7 @@ function mapInit() {
                 
             });
             
-            openBalloon(clusterer, obj, myMap, coords);
+            // openBalloon(clusterer, obj, myMap, coords);
 
         });
 

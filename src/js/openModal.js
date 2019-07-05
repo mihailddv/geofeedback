@@ -10,6 +10,31 @@ export function openModal(obj, address, pagePixels, myMap, clusterer) {
 
     reviewMain.style.display = 'block';
     
+    const reviewList = document.querySelector('.review__list'),
+        reviewItem = document.createElement('div');
+
+    reviewList.innerHTML = '';
+
+    reviewList.appendChild(reviewItem);
+
+    reviewItem.classList.add('review__item');
+
+    reviewItem.innerHTML = '<div class="review__item-header"><div class="review__item-user"></div><div class="review__item-position"></div><div class="review__item-date"></div></div><div class="review__item-text"></div>';
+    
+    const reviewName = document.querySelector('.review__item-user'),
+        reviewPlace = document.querySelector('.review__item-position'),
+        reviewText = document.querySelector('.review__item-text');
+
+    if (obj.name != undefined) {
+        reviewName.innerHTML = obj.name;
+    }
+    if (obj.place != undefined) {
+        reviewPlace.innerHTML = obj.place;
+    }
+    if (obj.text != undefined) {
+        reviewText.innerHTML = obj.text;
+    }
+    
     // адрес
     let reviewAddress = document.querySelector('.review__location');
 
@@ -34,5 +59,5 @@ export function openModal(obj, address, pagePixels, myMap, clusterer) {
         }
 
     });
-    
+
 }
