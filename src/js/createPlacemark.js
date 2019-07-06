@@ -22,7 +22,7 @@ export function createPlacemark(myMap, obj, clusterer, pagePixels) {
 
     myPlacemark.events.add('click', () => {
 
-        openModal(obj, pagePixels, myMap, clusterer);
+        openModal(obj, pagePixels, myMap, clusterer, myPlacemark.properties._data.hintContent);
         
     })
 }
