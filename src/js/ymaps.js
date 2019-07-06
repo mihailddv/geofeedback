@@ -110,32 +110,20 @@ function mapInit() {
                 var address = firstGeoObject.properties.get('name') + ", " + firstGeoObject.properties.get('description');
 
                 obj.coords = coords; // записываем координаты клика в объект
-                // obj.address = res.geoObjects.get(0).properties.get('text'); // получаем адрес
                 obj.address = address; // получаем адрес
                         
                 obj.comments = {
                     list: []
                 };
-                
-                // if (!!allObj[obj.address]) {
-                //     allObj[obj.address].push(obj);
-                // } else {
-                //     allObj[obj.address] = [obj]
-                // }
-                
-                // console.log(allObj);
 
-                openModal(obj, address, pagePixels, myMap, clusterer, placemarks);
+                openModal(obj, pagePixels, myMap, clusterer, placemarks);
 
                 balloonLink(obj, address, pagePixels, myMap, clusterer, placemarks);
                 
             });
-            
-            // openBalloon(clusterer, obj, myMap, coords);
 
         });
         
-
     });
 
 }
