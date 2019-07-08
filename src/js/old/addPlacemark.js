@@ -16,7 +16,7 @@ export function addPlacemark(obj) {
 
     obj.comments.list.push(review);
 
-    console.log(review);
+    // console.log(review);
     
     // comBox.innerHTML = render(obj.comments);
 

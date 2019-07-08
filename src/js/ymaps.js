@@ -103,6 +103,7 @@ function mapInit() {
             var position = e.get('position');
 
             let pagePixels = e.get('pagePixels');
+            let popup = document.querySelector('.review');
 
             geoCoords.then(res => {
 
@@ -116,7 +117,7 @@ function mapInit() {
                     list: []
                 };
 
-                openModal(obj, pagePixels, myMap, clusterer);
+                openModal(obj, pagePixels, myMap, clusterer, popup);
 
                 balloonLink(obj, address, pagePixels, myMap, clusterer);
                 
