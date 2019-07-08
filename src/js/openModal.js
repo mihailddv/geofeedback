@@ -14,13 +14,11 @@ export function openModal(obj, pagePixels, myMap, clusterer, placemarks, myPlace
         const reviewList = document.querySelector('.review__list'),
             reviewItem = document.createElement('div');
 
-        reviewList.innerHTML = '';
-
-        reviewList.appendChild(reviewItem);
-
         reviewItem.classList.add('review__item');
 
         reviewItem.innerHTML = '<div class="review__item-header"><div class="review__item-user"></div><div class="review__item-position"></div><div class="review__item-date"></div></div><div class="review__item-text"></div>';
+        
+        reviewList.appendChild(reviewItem);
 
         const reviewName = document.querySelector('.review__item-user'),
             reviewPlace = document.querySelector('.review__item-position'),
