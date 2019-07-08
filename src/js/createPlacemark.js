@@ -3,7 +3,7 @@ import { openModal } from './openModal';
 export function createPlacemark(myMap, obj, clusterer, pagePixels) {
 
     var myPlacemark = new ymaps.Placemark(obj.coords, {
-        hintContent: myPlacemark,
+        hintContent: obj.coords,
         balloonContentHeader: [obj.name, obj.place],
         balloonContentBody: obj.text,
         balloonContentFooter: '<span class="balloon__link">' + obj.address + '</span>',
@@ -24,5 +24,7 @@ export function createPlacemark(myMap, obj, clusterer, pagePixels) {
 
         openModal(obj, pagePixels, myMap, clusterer, myPlacemark.properties._data.hintContent);
         
-    })
+    })    
+
+    // console.log(myPlacemark.properties._data.hintContent);
 }

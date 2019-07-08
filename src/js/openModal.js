@@ -3,7 +3,7 @@ import { addReview } from './addReview';
 import { formval } from './formval';
 import { createPlacemark } from './createPlacemark';
 
-export function openModal(obj, pagePixels, myMap, clusterer, placemarks, myPlacemark) {
+export function openModal(obj, pagePixels, myMap, clusterer, myPlacemark) {
     let reviewMain = document.querySelector('.review-main');
 
     reviewMain.innerHTML = reviewForm();
@@ -30,8 +30,6 @@ export function openModal(obj, pagePixels, myMap, clusterer, placemarks, myPlace
 
     }
 
-    console.log(myPlacemark);
-
     // адрес
     let reviewAddress = document.querySelector('.review__location');
 
@@ -49,9 +47,10 @@ export function openModal(obj, pagePixels, myMap, clusterer, placemarks, myPlace
 
         if (formval()) {
 
-            addReview(obj, placemarks);
+            // addReview(obj, placemarks);
+            addReview(obj);
 
-            createPlacemark(myMap, obj, clusterer, pagePixels, placemarks);
+            createPlacemark(myMap, obj, clusterer, pagePixels);
             
         }
 
