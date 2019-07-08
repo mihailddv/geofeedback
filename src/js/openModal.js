@@ -30,6 +30,8 @@ export function openModal(obj, pagePixels, myMap, clusterer, myPlacemark) {
 
     }
 
+    // console.log(myPlacemark.properties._data.hintContent); 
+
     // адрес
     let reviewAddress = document.querySelector('.review__location');
 

@@ -116,9 +116,9 @@ function mapInit() {
                     list: []
                 };
 
-                openModal(obj, pagePixels, myMap, clusterer, placemarks);
+                openModal(obj, pagePixels, myMap, clusterer);
 
-                balloonLink(obj, address, pagePixels, myMap, clusterer, placemarks);
+                balloonLink(obj, address, pagePixels, myMap, clusterer);
                 
             });
 
