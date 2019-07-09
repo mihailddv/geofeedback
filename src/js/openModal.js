@@ -3,7 +3,8 @@ import { addReview } from './addReview';
 import { formval } from './formval';
 import { createPlacemark } from './createPlacemark';
 
-export function openModal(obj, pagePixels, myMap, clusterer, myPlacemark) {
+export function openModal(obj, pagePixels, myMap, clusterer, placemarkContent) {
+    
     let reviewMain = document.querySelector('.review-main');
 
     reviewMain.innerHTML = reviewForm();
