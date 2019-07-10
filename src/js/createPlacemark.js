@@ -7,6 +7,7 @@ export function createPlacemark(myMap, obj, clusterer, pagePixels) {
         balloonContentHeader: [obj.name, obj.place],
         balloonContentBody: obj.text,
         balloonContentFooter: '<span class="balloon__link">' + obj.address + '</span>',
+        fullContent: [obj.coords, obj.name, obj.place, obj.text]
     }, {
         preset: 'islands#violetDotIconWithCaption',
         draggable: false,
@@ -22,9 +23,8 @@ export function createPlacemark(myMap, obj, clusterer, pagePixels) {
 
     myPlacemark.events.add('click', () => {
 
-        openModal(obj, pagePixels, myMap, clusterer, myPlacemark.properties._data.balloonContentBody);
+        openModal(obj, pagePixels, myMap, clusterer, myPlacemark.properties._data.fullContent);
         
     })    
 
-    // console.log(myPlacemark.properties._data.hintContent);
 }

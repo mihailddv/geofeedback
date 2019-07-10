@@ -4,6 +4,8 @@ import { formval } from './formval';
 import { createPlacemark } from './createPlacemark';
 
 export function openModal(obj, pagePixels, myMap, clusterer, placemarkContent) {
+
+    console.log(placemarkContent);    
     
     let reviewMain = document.querySelector('.review-main');
 
